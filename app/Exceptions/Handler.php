@@ -2,8 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Traits\Helper;
+use Exception;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
+use Storage;
 
 class Handler extends ExceptionHandler
 {
@@ -29,12 +33,10 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param  \Exception  $exception
      * @return void
-     *
-     * @throws \Exception
      */
-    public function report(Throwable $exception)
+    public function report(Exception $exception)
     {
         parent::report($exception);
     }
@@ -43,13 +45,27 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Throwable
+     * @param  \Exception  $exception
+     * @return \Illuminate\Http\Response
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Exception $exception)
     {
+        if ( $request->is('api/*') && $exception->getMessage() !== 'Unauthenticated.'){
+            Helper::write_log_error($exception,"Mobile",$request->getRequestUri());
+            return Helper::sendResponse(false,"Error not define",500,$exception->getMessage());
+        }
+        elseif($request->is('cms/*')){
+            Helper::write_log_error($exception,"Web",$request->getRequestUri());
+        }
         return parent::render($request, $exception);
     }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ( $request->is('api/*'))
+            return Helper::sendResponse(false,"Unauthenticated",401,"Access token expired, revoked or wrong");
+        else return redirect()->guest(route('login'));
+
+    }
+
 }

@@ -1,0 +1,21 @@
+# app.yaml
+runtime: php
+
+env: flex 
+
+runtime_config:
+ document_root: public 
+
+env_variables:
+  ## Put production environment variables here.
+  APP_KEY: "base64:0kO3FhVNG63nU2M5IfNXflv6F6muDOqVpl6kOj7o7Z4="
+  APP_STORAGE: /tmp
+  VIEW_COMPILED_PATH: /tmp
+  SESSION_DRIVER: cookie
+
+  DB_DATABASE: dressium
+  DB_USERNAME: root
+  DB_PASSWORD: 123456
+  DB_SOCKET: "/cloudsql/decent-core-265909:us-central1:root"
+beta_settings:
+  cloud_sql_instances: decent-core-265909:us-central1:root

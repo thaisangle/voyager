@@ -8,20 +8,25 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2.5",
-        "fideloper/proxy": "^4.2",
-        "fruitcake/laravel-cors": "^1.0",
-        "guzzlehttp/guzzle": "^6.3",
-        "laravel/framework": "^7.0",
-        "laravel/tinker": "^2.0",
-        "tcg/voyager": "^1.4"
+        "php": "^7.1.3",
+        "cartalyst/stripe-laravel": "10.0.*",
+        "fideloper/proxy": "^4.0",
+        "intervention/image": "^2.5",
+        "laravel/cashier": "^9.3",
+        "laravel/cashier-braintree": "^3.1",
+        "laravel/framework": "5.8.*",
+        "laravel/passport": "^7.2",
+        "laravel/tinker": "^1.0",
+        "stripe/stripe-php": "^6.37",
+        "superbalist/laravel-google-cloud-storage": "^2.2",
+        "ext-gd": "*"
     },
     "require-dev": {
-        "facade/ignition": "^2.0",
-        "fzaninotto/faker": "^1.9.1",
-        "mockery/mockery": "^1.3.1",
-        "nunomaduro/collision": "^4.1",
-        "phpunit/phpunit": "^8.5"
+        "filp/whoops": "^2.0",
+        "fzaninotto/faker": "^1.4",
+        "mockery/mockery": "^1.0",
+        "nunomaduro/collision": "^2.0",
+        "phpunit/phpunit": "^7.5"
     },
     "config": {
         "optimize-autoloader": true,
@@ -60,11 +65,5 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    },
-    "repositories": {
-        "hooks": {
-            "type": "composer",
-            "url": "https://larapack.io"
-        }
     }
 }
